@@ -4,7 +4,7 @@ import { useState, useEffect } from "react";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import * as z from "zod";
-import { useMutation, useQueryClient } from "@tanstack/react-query";
+import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { Loader2, MapPin } from 'lucide-react';
 import { toast } from "sonner";
 
@@ -12,9 +12,7 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
 import { Form, FormControl, FormDescription, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form";
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 
-// Form validation schema
 const formSchema = z.object({
   location: z.string().min(2, "Location must be at least 2 characters"),
   latitude: z.number().optional(),
@@ -24,24 +22,14 @@ const formSchema = z.object({
   currentCrop: z.string().min(2, "Current crop must be at least 2 characters").optional(),
 });
 
+
+
 type FormValues = z.infer<typeof formSchema>;
 
-// Crop types for the select dropdown
-const cropTypes = [
-  "Grain",
-  "Vegetables",
-  "Fruits",
-  "Nuts",
-  "Oilseeds",
-  "Fiber",
-  "Legumes",
-  "Mixed",
-  "Other"
-];
 
-// API function to update user profile
+
 const updateUserProfile = async (data: FormValues) => {
-  const response = await fetch("/api/user/profile", {
+  const response = await fetch("/api/user/farme", {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
@@ -61,7 +49,16 @@ export default function ProfilePage() {
   const [isGettingLocation, setIsGettingLocation] = useState(false);
   const queryClient = useQueryClient();
   
-  // Initialize form with React Hook Form
+
+  const {data, isLoading , error} = useQuery({
+    queryKey: ["userProfile"],
+    queryFn: async () => {
+      const response = await fetch("/api/user/farme");
+      return response.json();
+    },
+  })
+
+
   const form = useForm<FormValues>({
     resolver: zodResolver(formSchema),
     defaultValues: {
@@ -74,7 +71,6 @@ export default function ProfilePage() {
     },
   });
 
-  // Set up mutation with React Query
   const mutation = useMutation({
     mutationFn: updateUserProfile,
     onSuccess: () => {
@@ -86,7 +82,7 @@ export default function ProfilePage() {
     },
   });
 
-  // Function to get current location using browser geolocation API
+
   const getCurrentLocation = () => {
     setIsGettingLocation(true);
     
@@ -110,7 +106,7 @@ export default function ProfilePage() {
             }
           })
           .catch(() => {
-            // Silently fail if reverse geocoding doesn't work
+                toast.error('Error in the getting the location')
           })
           .finally(() => {
             setIsGettingLocation(false);
@@ -142,8 +138,20 @@ export default function ProfilePage() {
     mutation.mutate(data);
   };
 
+
+  useEffect(()=>{
+    if(data){
+      form.setValue("location", data.location);
+      form.setValue("latitude", data.latitude);
+      form.setValue("longitude", data.longitude);
+      form.setValue("farmSize", data.farmSize);
+      form.setValue("cropType", data.cropType);
+      form.setValue("currentCrop", data.currentCrop);
+    }
+  },[data])
+
   return (
-    <div className="container max-w-2xl py-10">
+    <div className="container mx-auto max-w-xl py-10">
       <Card>
         <CardHeader>
           <CardTitle>Farm Profile</CardTitle>
@@ -260,29 +268,15 @@ export default function ProfilePage() {
                   name="cropType"
                   render={({ field }) => (
                     <FormItem>
-                      <FormLabel>Crop Type</FormLabel>
-                      <Select 
-                        onValueChange={field.onChange} 
-                        defaultValue={field.value}
-                      >
-                        <FormControl>
-                          <SelectTrigger>
-                            <SelectValue placeholder="Select crop type" />
-                          </SelectTrigger>
-                        </FormControl>
-                        <SelectContent>
-                          {cropTypes.map((type) => (
-                            <SelectItem key={type} value={type}>
-                              {type}
-                            </SelectItem>
-                          ))}
-                        </SelectContent>
-                      </Select>
-                      <FormDescription>
-                        Primary type of crops you grow
-                      </FormDescription>
-                      <FormMessage />
-                    </FormItem>
+                    <FormLabel>Intrested Crops</FormLabel>
+                    <FormControl>
+                      <Input placeholder="Enter  crop you are intrested " {...field} />
+                    </FormControl>
+                    <FormDescription>
+                      Enter the crops u are intrested in growing
+                    </FormDescription>
+                    <FormMessage />
+                  </FormItem>
                   )}
                 />
 

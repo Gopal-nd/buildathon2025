@@ -20,6 +20,12 @@ model User {
   email         String
   emailVerified Boolean
   image         String?
+  location      String?
+  latitude      Float?
+  longitude     Float?
+  farmSize      Float?
+  cropType      String?  // Main crop type
+  currentCrop   String?  // Additional crop currently being grown
   createdAt     DateTime
   updatedAt     DateTime
   sessions      Session[]
