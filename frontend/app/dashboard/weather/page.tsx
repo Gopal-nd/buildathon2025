@@ -13,6 +13,8 @@ import React, { useCallback, useEffect, useState } from 'react'
 import WeatherComponent from '@/components/weather/DetailsToday'
 import HourlyWeatherData from '@/components/weather/Hourlydata'
 import { useDebounce } from 'use-debounce'
+import { aggregateDailyWeather } from '@/lib/aggregateDailyWeather'
+import DailyWeatherComponent from '@/components/weather/DailyWeatherComponent'
 
 const fetchWeatherData = async (params: { lat?: number; lon?: number; q?: string }) => {
   const { data } = await axios.get('https://api.openweathermap.org/data/2.5/weather', {
@@ -93,6 +95,12 @@ export default function WeatherPage() {
     }
   }, [weatherError, hourlyError])
 
+
+  // Aggregate hourly data into daily data
+  if(!hourlyData) return <Skeleton className='h-96' />
+  const dailyWeatherData = aggregateDailyWeather(hourlyData as WeatherDataHour[])
+
+
   return (
     <div className='flex flex-col space-y-4'>
       <header className='flex justify-between items-center px-4 w-full mx-auto border-b pb-2'>
@@ -131,11 +139,16 @@ export default function WeatherPage() {
       {(weatherLoading || hourlyLoading) && <WeatherSkeleton />}
 
       {weatherData && (
-        <div className='w-[90%] mx-auto space-y-4'>
+        <div className=' mx-auto space-y-4'>
           <WeatherComponent weatherData={weatherData} />
           {hourlyData && <HourlyWeatherData HourlyWeatherData={hourlyData} />}
         </div>
       )}
+    <div className="p-2 pt-4 border-t rounded-lg shadow-md max-w-5xl mx-auto">
+        
+       <DailyWeatherComponent dailyWeatherData={dailyWeatherData} />
+       </div>
+
     </div>
   )
 }
