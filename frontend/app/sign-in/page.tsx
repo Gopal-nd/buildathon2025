@@ -18,6 +18,8 @@ export default function SignIn() {
   const [rememberMe, setRememberMe] = useState(false);
 
   return (
+    <div className="flex items-center justify-center min-h-screen">
+
     <Card className="max-w-md">
       <CardHeader>
         <CardTitle className="text-lg md:text-xl">Sign In</CardTitle>
@@ -50,7 +52,7 @@ export default function SignIn() {
                     await signIn.social(
                     {
                       provider: "github",
-                      callbackURL: `${process.env.NEXT_PUBLIC_APP_URL}/dashboard`
+                      callbackURL: `/dashboard`
                     },
                     {
                       onRequest: (ctx) => {
@@ -94,5 +96,8 @@ export default function SignIn() {
           </div>
         </CardFooter>
     </Card>
+    </div>
+
   );
+
 }

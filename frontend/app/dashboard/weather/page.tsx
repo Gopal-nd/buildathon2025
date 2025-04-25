@@ -97,8 +97,8 @@ export default function WeatherPage() {
 
 
   // Aggregate hourly data into daily data
-  if(!hourlyData) return <Skeleton className='h-96' />
-  const dailyWeatherData = aggregateDailyWeather(hourlyData as WeatherDataHour[])
+  
+  const dailyWeatherData = hourlyData &&  aggregateDailyWeather(hourlyData as WeatherDataHour[])
 
 
   return (
@@ -145,8 +145,10 @@ export default function WeatherPage() {
         </div>
       )}
     <div className="p-2 pt-4 border-t rounded-lg shadow-md max-w-5xl mx-auto">
-        
+        {
+            dailyWeatherData && 
        <DailyWeatherComponent dailyWeatherData={dailyWeatherData} />
+        }
        </div>
 
     </div>

@@ -4,7 +4,7 @@ import {
 
 
 export const authClient = createAuthClient({
-    baseURL: process.env.NEXT_PUBLIC_BACKEND_URL!,
+    baseURL: process.env.BETTER_AUTH_URL!,
 
 })
 

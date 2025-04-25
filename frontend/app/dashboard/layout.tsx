@@ -63,6 +63,14 @@ export default function Component({ children }: { children: React.ReactNode }) {
           <CircleUser  className="h-5 w-5 text-primary" />
           <span>My Account</span>
         </Link>
+        <Link
+          href="/dashboard/farme"
+          className="flex items-center space-x-2 px-4 py-2 rounded-lg"
+          onClick={handleLinkClick}
+        >
+          <CircleUser  className="h-5 w-5 text-primary" />
+          <span>Farm</span>
+        </Link>
 
       </div>
       <div className="flex items-center">
