@@ -16,10 +16,10 @@ export default  function Home() {
 
   return (
     <div>{
-        isPending ? "Loading..." : "Not loading"
+        isPending ? "Loading..." : ""
         }
         {
-            error ? "Error" : "No error"
+            error ? "Error" : ""
         }
         {
             session ? <>
