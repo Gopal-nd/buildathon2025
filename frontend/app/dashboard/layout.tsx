@@ -16,6 +16,8 @@ import {
   Cloud,
   Sprout,
   ScanEye,
+  Grid2x2X,
+  ArrowUpFromLine,
 
 } from "lucide-react";
 import NavbarProfile from "@/components/NavbarProfile";
@@ -72,6 +74,22 @@ export default function Component({ children }: { children: React.ReactNode }) {
         >
           <ScanEye    className="h-5 w-5 text-primary" />
           <span>Lense</span>
+        </Link>
+        <Link
+          href="/dashboard/soil"
+          className="flex items-center space-x-2 px-4 py-2 rounded-lg"
+          onClick={handleLinkClick}
+        >
+          <Grid2x2X     className="h-5 w-5 text-primary" />
+          <span>Soil</span>
+        </Link>
+        <Link
+          href="/dashboard/recommend"
+          className="flex items-center space-x-2 px-4 py-2 rounded-lg"
+          onClick={handleLinkClick}
+        >
+          <ArrowUpFromLine     className="h-5 w-5 text-primary" />
+          <span>Tips</span>
         </Link>
         <Link
           href="/dashboard/account"

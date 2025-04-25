@@ -32,11 +32,21 @@ model User {
   dataSets      DataSet[]
   accounts      Account[]
   Chats         Chat[]
+  recommendation Recommendation[]
 
   @@unique([email])
   @@map("user")
 }
 
+
+model Recommendation {
+  id          String   @id @default(cuid())
+  userId      String
+  what     String   
+  why      String  
+  createdAt   DateTime @default(now())
+  user        User     @relation(fields: [userId], references: [id])
+}
 
 
 model Chat {
