@@ -20,6 +20,7 @@ const formSchema = z.object({
   farmSize: z.number().min(0.1, "Farm size must be greater than 0"),
   cropType: z.string().min(1, "Please select a crop type"),
   currentCrop: z.string().min(2, "Current crop must be at least 2 characters").optional(),
+  waterResourse: z.string().min(2, "Water resourse must be at least 2 characters").optional(),
 });
 
 
@@ -147,6 +148,7 @@ export default function ProfilePage() {
       form.setValue("farmSize", data.farmSize);
       form.setValue("cropType", data.cropType);
       form.setValue("currentCrop", data.currentCrop);
+      form.setValue("waterResourse", data.waterResourse);
     }
   },[data])
 
@@ -291,6 +293,23 @@ export default function ProfilePage() {
                       </FormControl>
                       <FormDescription>
                         What are you currently growing?
+                      </FormDescription>
+                      <FormMessage />
+                    </FormItem>
+                  )}
+                />
+
+<FormField
+                  control={form.control}
+                  name="waterResourse"
+                  render={({ field }) => (
+                    <FormItem>
+                      <FormLabel>Water Availability/ Resourse</FormLabel>
+                      <FormControl>
+                        <Input placeholder="Water Availability/ Resourse" {...field} />
+                      </FormControl>
+                      <FormDescription>
+                        how is the Availability of water
                       </FormDescription>
                       <FormMessage />
                     </FormItem>

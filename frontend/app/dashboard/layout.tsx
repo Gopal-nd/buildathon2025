@@ -18,6 +18,7 @@ import {
   ScanEye,
   Grid2x2X,
   ArrowUpFromLine,
+  MessageCircle,
 
 } from "lucide-react";
 import NavbarProfile from "@/components/NavbarProfile";
@@ -90,6 +91,14 @@ export default function Component({ children }: { children: React.ReactNode }) {
         >
           <ArrowUpFromLine     className="h-5 w-5 text-primary" />
           <span>Tips</span>
+        </Link>
+        <Link
+          href="/dashboard/chat"
+          className="flex items-center space-x-2 px-4 py-2 rounded-lg"
+          onClick={handleLinkClick}
+        >
+          <MessageCircle      className="h-5 w-5 text-primary" />
+          <span>Chat</span>
         </Link>
         <Link
           href="/dashboard/account"

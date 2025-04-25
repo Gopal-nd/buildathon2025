@@ -325,7 +325,6 @@ Return the result in this JSON format:
       
       return NextResponse.json(save);
     }
-
     // Gemini Call - updated to match the example syntax
     console.log(process.env.GEMINI_API_KEY)
     try {

@@ -39,7 +39,7 @@ const DailyWeatherComponent: React.FC<DailyWeatherProps> = ({ dailyWeatherData }
             <div className="flex flex-col items-center md:items-start text-sm ">
               <div className="mb-1">Wind Speed: {day.avgWindSpeed.toFixed(1)} m/s</div>
               <div className="mb-1">Cloudiness: {day.avgCloudiness.toFixed(2)}%</div>
-              {day.totalRain > 0 && <div>Rain: {day.totalRain} mm</div>}
+              {day.totalRain > 0 && <div>Rain: {day.totalRain.toFixed(2)} mm</div>}
             </div>
           </div>
         ))}

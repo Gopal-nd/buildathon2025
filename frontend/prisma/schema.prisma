@@ -21,6 +21,7 @@ model User {
   emailVerified Boolean
   image         String?
   location      String?
+  waterResourse String?
   latitude      Float?
   longitude     Float?
   farmSize      Float?
@@ -33,6 +34,7 @@ model User {
   accounts      Account[]
   Chats         Chat[]
   recommendation Recommendation[]
+  context       Context[]
 
   @@unique([email])
   @@map("user")
@@ -65,6 +67,27 @@ model Message {
   content   String
   createdAt DateTime @default(now())
 }
+
+
+
+
+model Context {
+  id        String    @id @default(cuid())
+  createdAt DateTime  @default(now())
+  userId    String
+  user      User @relation(fields: [userId], references: [id],onDelete: Cascade)
+  contextMessages  ContextMessage[]
+}
+
+model ContextMessage {
+  id        String   @id @default(cuid())
+  chatId    String
+  context    Context     @relation(fields: [chatId], references: [id],onDelete: Cascade)
+  role      String   // "user" or "model"
+  content   String
+  createdAt DateTime @default(now())
+}
+
 
 
 model DataSet{

@@ -23,8 +23,8 @@ const session = await auth.api.getSession({
     console.log(body)
 
     // Validate the data (basic validation, more comprehensive validation should be done)
-    const { location, latitude, longitude, farmSize, cropType, currentCrop } = body
-
+    const { location, latitude, longitude, farmSize, cropType, currentCrop, waterResourse } = body
+console.log(waterResourse)
     
     const res = await prisma.user.update({
       where: { id: userId },
@@ -35,6 +35,7 @@ const session = await auth.api.getSession({
         farmSize: farmSize ? parseFloat(farmSize) : null,
         cropType:cropType,
         currentCrop:currentCrop,
+        waterResourse:waterResourse,
       },
     })
    
