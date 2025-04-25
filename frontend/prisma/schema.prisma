@@ -31,10 +31,31 @@ model User {
   sessions      Session[]
   dataSets      DataSet[]
   accounts      Account[]
+  Chats         Chat[]
 
   @@unique([email])
   @@map("user")
 }
+
+
+
+model Chat {
+  id        String    @id @default(cuid())
+  createdAt DateTime  @default(now())
+  userId    String
+  user      User @relation(fields: [userId], references: [id],onDelete: Cascade)
+  messages  Message[]
+}
+
+model Message {
+  id        String   @id @default(cuid())
+  chatId    String
+  chat      Chat     @relation(fields: [chatId], references: [id],onDelete: Cascade)
+  role      String   // "user" or "model"
+  content   String
+  createdAt DateTime @default(now())
+}
+
 
 model DataSet{
   id String @default(uuid()) @id

@@ -4,6 +4,9 @@ import React, { useState } from "react";
 import { UploadButton } from "@/utils/uploadthing";
 import { toast } from "sonner";
 import axios from "axios";
+import { useQuery } from "@tanstack/react-query";
+import DocumentAccordion from "./DocumentList";
+import { Button } from "./ui/button";
 
 const DocumentUpload = ({ id }: { id: string }) => {
   const [doc,setdoc]=React.useState<any>(null)
@@ -36,9 +39,27 @@ const DocumentUpload = ({ id }: { id: string }) => {
       setLoading(false)
     }
   };
+  const {data,isLoading} = useQuery({
+    queryKey: ["userProfile",'documets'],
+    queryFn:async()=>{
+      const res = await axios.get('/api/upload/all')
+      return res.data.dataSets
+    }
+  })
+
+  if(isLoading){
+<div>Loading</div>
+  }
+  console.log(data)
 
   return (
-    <div className="p-4 border rounded-lg">
+    <div className="flex flex-col gap-4  justify-between">
+<div className="flex justify-between items-center">
+
+<DocumentAccordion documents={data} setpfdUrl={setdoc}/>
+<Button onClick={()=>setdoc(null)}>add</Button>
+</div>
+   {!doc && <div className="p-4 border rounded-lg flex-1">
       <UploadButton
         endpoint="imageUploader"
         onClientUploadComplete={handleUploadComplete}
@@ -52,16 +73,19 @@ const DocumentUpload = ({ id }: { id: string }) => {
         </div>
       )}
 
-      {
+      
+    </div>}
+    {
         doc && (
           <iframe
           src={doc!}
-          className="w-full h-full border"
+          className="w-[500px] h-[600px] border"
           title="PDF Preview"
           ></iframe>
         )
       }
     </div>
+
   );
 };
 
