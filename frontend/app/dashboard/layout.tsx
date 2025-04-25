@@ -13,6 +13,7 @@ import {
   ChevronRight,
   CircleUser,
   Fan,
+  Cloud,
 
 } from "lucide-react";
 import NavbarProfile from "@/components/NavbarProfile";
@@ -46,7 +47,14 @@ export default function Component({ children }: { children: React.ReactNode }) {
           <Home className="h-5 w-5 text-primary" />
           <span>Home</span>
         </Link>
-        
+        <Link
+          href="/dashboard/weather"
+          className="flex items-center space-x-2 px-4 py-2 rounded-lg"
+          onClick={handleLinkClick}
+        >
+          <Cloud   className="h-5 w-5 text-primary" />
+          <span>Weather</span>
+        </Link>        
         <Link
           href="/dashboard/account"
           className="flex items-center space-x-2 px-4 py-2 rounded-lg"
@@ -55,6 +63,7 @@ export default function Component({ children }: { children: React.ReactNode }) {
           <CircleUser  className="h-5 w-5 text-primary" />
           <span>My Account</span>
         </Link>
+
       </div>
       <div className="flex items-center">
      {isSidebarOpen &&  <Button onClick={async()=>{
