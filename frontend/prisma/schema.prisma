@@ -29,12 +29,21 @@ model User {
   createdAt     DateTime
   updatedAt     DateTime
   sessions      Session[]
+  dataSets      DataSet[]
   accounts      Account[]
 
   @@unique([email])
   @@map("user")
 }
 
+model DataSet{
+  id String @default(uuid()) @id
+  filename String?
+  fileURL String
+  description String?
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+  userId String
+}
 model Session {
   id        String   @id
   expiresAt DateTime

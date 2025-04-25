@@ -15,6 +15,7 @@ import {
   Fan,
   Cloud,
   Sprout,
+  ScanEye,
 
 } from "lucide-react";
 import NavbarProfile from "@/components/NavbarProfile";
@@ -63,6 +64,14 @@ export default function Component({ children }: { children: React.ReactNode }) {
         >
           <Sprout   className="h-5 w-5 text-primary" />
           <span>Farm</span>
+        </Link>
+        <Link
+          href="/dashboard/lense"
+          className="flex items-center space-x-2 px-4 py-2 rounded-lg"
+          onClick={handleLinkClick}
+        >
+          <ScanEye    className="h-5 w-5 text-primary" />
+          <span>Lense</span>
         </Link>
         <Link
           href="/dashboard/account"
