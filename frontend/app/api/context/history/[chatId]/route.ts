@@ -1,13 +1,15 @@
 import prisma from "@/lib/prisma";
 import { NextRequest, NextResponse } from "next/server";
 
+
+type Params = Promise<{ slug: string }>
 export async function GET(
   req: NextRequest,
-  { params }: { params: { chatId: string } }
+  segmentData: { params: Params }
 ) {
-  const chatId = params.chatId;
-
-  console.log("Params:", params);
+    const params = await segmentData.params
+    const slug = params.slug
+    const chatId = slug
   console.log("Query Params:", req.nextUrl.searchParams.toString(), "get specific user chat history");
 
   try {

@@ -69,6 +69,7 @@ export async function GET() {
         farmSize: true,
         cropType: true,
         currentCrop: true,
+        waterResourse: true
       },
     })
 

@@ -9,11 +9,15 @@ import { GoogleGenAI } from "@google/genai";
 import axios from 'axios';
 
 const ai = new GoogleGenAI({ apiKey: process.env.GOOGLE_API_KEY });
-
+type Params = Promise<{ chatId: string }>
+ 
+ 
 export async function GET(
   request: NextRequest,
-  { params }: { params: { chatId: string } }
+  segmentData: { params: Params }
 ) {
+  const params = segmentData.params
+  const chatId = (await params).chatId
   try {
     const session = await auth.api.getSession({
       headers: await headers()
@@ -23,7 +27,7 @@ export async function GET(
       return NextResponse.json({ message: "Unauthorized" }, { status: 401 });
     }
 
-    const chatId = params.chatId;
+    
     const searchParams = request.nextUrl.searchParams;
     const query = searchParams.get('query');
     const id = searchParams.get('id');
