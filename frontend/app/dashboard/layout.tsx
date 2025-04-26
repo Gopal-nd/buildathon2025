@@ -51,15 +51,7 @@ export default function Component({ children }: { children: React.ReactNode }) {
         >
           <Home className="h-5 w-5 text-primary" />
           <span>Home</span>
-        </Link>
-        <Link
-          href="/dashboard/weather"
-          className="flex items-center space-x-2 px-4 py-2 rounded-lg"
-          onClick={handleLinkClick}
-        >
-          <Cloud   className="h-5 w-5 text-primary" />
-          <span>Weather</span>
-        </Link>        
+        </Link>      
         <Link
           href="/dashboard/farme"
           className="flex items-center space-x-2 px-4 py-2 rounded-lg"
@@ -75,14 +67,6 @@ export default function Component({ children }: { children: React.ReactNode }) {
         >
           <ScanEye    className="h-5 w-5 text-primary" />
           <span>Lense</span>
-        </Link>
-        <Link
-          href="/dashboard/soil"
-          className="flex items-center space-x-2 px-4 py-2 rounded-lg"
-          onClick={handleLinkClick}
-        >
-          <Grid2x2X     className="h-5 w-5 text-primary" />
-          <span>Soil</span>
         </Link>
         <Link
           href="/dashboard/recommend"
